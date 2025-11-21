@@ -1,0 +1,28 @@
+O BattleService é um Foreground Service, um tipo especial de serviço que continua executando mesmo se o app for fechado.
+Porque:
+O Android mata serviços comuns quando o app sai da tela
+Foreground Services exibem uma notificação constante
+Isso garante que a batalha continua rodando mesmo com o app fechado
+Isso atende exatamente o requisito do exercício
+
+
+O serviço é iniciado a partir de uma Activity:
+
+
+val startIntent = Intent(this, BattleService::class.java).apply {
+
+  action = BattleService.ACTION_START
+
+}
+
+startForegroundService(startIntent)
+
+Criamos um Intent com a ação ACTION_START
+Chamamos startForegroundService() para iniciar o serviço em modo foreground
+
+O service:
+Cria o canal de notificação (obrigatório no Android 8+)
+Cria uma notificação “fixa” de Foreground
+Inicia a engine de batalha
+A cada turno, atualiza a notificação
+Se o herói morrer, envia uma outra notificação e encerra o serviço
